@@ -1,0 +1,3 @@
+[submodule "boolop_wrapper/InteractiveAndRobustMeshBooleans"]
+	path = boolop_wrapper/InteractiveAndRobustMeshBooleans
+	url = https://github.com/gcherchi/InteractiveAndRobustMeshBooleans.git
