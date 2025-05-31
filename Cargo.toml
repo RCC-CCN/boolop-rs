@@ -9,3 +9,12 @@ cxx = "1.0"
 [build-dependencies]
 cxx-build = "1.0"
 cmake = "0.1"
+
+[features]
+default = ["opt-o2"]
+opt-o0 = []
+opt-o1 = []
+opt-o2 = []
+opt-o3 = []
+opt-os = []  # Optimize for size
+opt-ofast = []  # Fast optimization (may break IEEE compliance)

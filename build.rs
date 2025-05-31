@@ -22,9 +22,26 @@ fn main() {
         "-Wno-stringop-overflow" 
     };
 
+    // Determine optimization level from features
+    let opt_flag = if cfg!(feature = "opt-o0") {
+        if cfg!(windows) { "/Od" } else { "-O0" }
+    } else if cfg!(feature = "opt-o1") {
+        if cfg!(windows) { "/O1" } else { "-O1" }
+    } else if cfg!(feature = "opt-o3") {
+        if cfg!(windows) { "/O2" } else { "-O3" }  // MSVC /O2 is roughly equivalent to GCC -O3
+    } else if cfg!(feature = "opt-os") {
+        if cfg!(windows) { "/Os" } else { "-Os" }
+    } else if cfg!(feature = "opt-ofast") {
+        if cfg!(windows) { "/O2 /fp:fast" } else { "-Ofast" }
+    } else {
+        // Default to O2
+        if cfg!(windows) { "/O2" } else { "-O2" }
+    };
+
     // Build the C++ library using CMake
     Config::new("boolop_wrapper")
         .cxxflag(cxxflags)
+        .cxxflag(opt_flag)
         .define("CMAKE_BUILD_TYPE", "Release")
         .define("BUILD_SHARED_LIBS", "OFF")
         .define("CMAKE_SUPPRESS_DEVELOPER_WARNINGS", "ON")
